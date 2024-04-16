@@ -1,6 +1,7 @@
 package com.student.register.StudentRegister.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,6 +17,7 @@ public class Student
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
     private int id;
+    @NotNull(message="is required")
     @Column(name="name")
     private String name;
     @Column(name="phone")
