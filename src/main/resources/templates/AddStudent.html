@@ -28,7 +28,7 @@
             <div class="mb-2 d-flex align-item-center">
                 <label for="gender" class="mt-1">Gender :</label>
                 <input class="form-check-input mb-3 p-2 mt-1 ms-2" type="radio" th:field="*{gender}" th:each="tempGender:${gender}" th:text="${tempGender}" th:value="${tempGender}" > <br>
-                <span th:if="${#fields.hasErrors('gender')}" th:error="*{gender}" class="text-danger"></span>
+                <span th:if="${#fields.hasErrors('gender')}" th:errors="*{gender}" class="text-danger"></span>
             </div>
 
             <div class="mb-2 d-flex align-item-center">
@@ -37,7 +37,7 @@
                     <option th:each="tempCourse:${course}"
                             th:text="${tempCourse}" th:value="${tempCourse}"></option>
                 </select>
-                <span th:if="${#fields.hasErrors('course')}" th:error="*{course}" class="text-danger"></span>
+                <span th:if="${#fields.hasErrors('course')}" th:errors="*{course}" class="text-danger"></span>
             </div>
 
             <div class="mb-2 d-flex align-item-center">

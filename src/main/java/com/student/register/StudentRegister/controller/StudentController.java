@@ -49,9 +49,11 @@ public class StudentController
     }
 
     @PostMapping("/insertStudent")
-    public String saveStudent(@Valid @ModelAttribute("student") Student student, BindingResult bindingResult)
+    public String saveStudent(@Valid @ModelAttribute("student") Student student, BindingResult bindingResult, Model model)
     {
         if(bindingResult.hasErrors()){
+            model.addAttribute("gender", gender);
+            model.addAttribute("course",course);
             return "AddStudent";
         }else{
             service.saveStudent(student);
