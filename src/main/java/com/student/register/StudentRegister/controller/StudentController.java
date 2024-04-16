@@ -2,14 +2,15 @@ package com.student.register.StudentRegister.controller;
 
 import com.student.register.StudentRegister.entities.Student;
 import com.student.register.StudentRegister.service.StudentService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -28,6 +29,16 @@ public class StudentController
         this.service=service;
     }
 
+    //Add @InitBinder to trim the input Strings
+    //Remove leading and trialing white spaces
+    //Resolve validation issues
+    @InitBinder
+    public void initBinder(WebDataBinder webDataBinder)
+    {
+        StringTrimmerEditor editor = new StringTrimmerEditor(true);
+        webDataBinder.registerCustomEditor(String.class,editor);
+    }
+
     @GetMapping("/showForm")
     public String showForm(Model model)
     {
@@ -35,6 +46,17 @@ public class StudentController
         model.addAttribute("gender", gender);
         model.addAttribute("course",course);
         return "AddStudent";
+    }
+
+    @PostMapping("/insertStudent")
+    public String saveStudent(@Valid @ModelAttribute("student") Student student, BindingResult bindingResult)
+    {
+        if(bindingResult.hasErrors()){
+            return "AddStudent";
+        }else{
+            service.saveStudent(student);
+            return "redirect:/list";
+        }
     }
 
     @GetMapping("/edit/{id}")
@@ -46,12 +68,7 @@ public class StudentController
         model.addAttribute("course",course);
         return "EditStudent";
     }
-    @PostMapping("/insertStudent")
-    public String saveStudent(@ModelAttribute("student") Student student)
-    {
-        service.saveStudent(student);
-        return "redirect:/list";
-    }
+
 
     @GetMapping("/list")
     public String getAllStudents(Model model)

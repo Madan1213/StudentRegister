@@ -12,16 +12,40 @@
     <div class="container border border-primary rounded m-5 p-4 w-50">
         <h4 class="h-3 mb-4 text-primary border border-dark rounded-5 w-50 text-center">Student Registration Form</h4>
         <form th:action="@{/insertStudent}" class="form-group" th:object="${student}" method="post">
-            Name :<input class="form-control w-50 mb-3" type="text" th:field="*{name}" placeholder="Enter Student Name">
-            Phone :<input class="form-control w-50 mb-3" type="text" th:field="*{phone}" placeholder="Enter Student Phone">
-            Gender :
-            <input class="form-check-input mb-3 p-2" type="radio" th:field="*{gender}" th:each="tempGender:${gender}" th:text="${tempGender}" th:value="${tempGender}" > <br>
-            Course :
-            <select class="form-control w-50 mb-3" th:field="*{course}">
-                <option th:each="tempCourse:${course}"
-                        th:text="${tempCourse}" th:value="${tempCourse}"></option>
-            </select>
-            Location : <input class="form-control w-50 mb-3" type="text" th:field="*{location}" placeholder="Enter Student Location">
+            <div class="mb-2 d-flex align-item-center">
+                <label for="name" class="mt-1">Name :</label>
+                <input class="form-control w-50 mb-3 ms-2" type="text" th:field="*{name}" placeholder="Enter Student Name">
+                <!--Adding Error Message if exists for FirstName-->
+                <span th:if="${#fields.hasErrors('name')}"
+                      th:errors="*{name}"
+                      class="text-danger"></span>
+            </div>
+            <div class="mb-2 d-flex align-item-center">
+                <label for="phone" class="mt-1">Phone :</label>
+                <input class="form-control w-50 mb-3 ms-2" type="text" th:field="*{phone}" placeholder="Enter Student Phone">
+                <span th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}" class="text-danger"></span>
+            </div>
+            <div class="mb-2 d-flex align-item-center">
+                <label for="gender" class="mt-1">Gender :</label>
+                <input class="form-check-input mb-3 p-2 mt-1 ms-2" type="radio" th:field="*{gender}" th:each="tempGender:${gender}" th:text="${tempGender}" th:value="${tempGender}" > <br>
+                <span th:if="${#fields.hasErrors('gender')}" th:error="*{gender}" class="text-danger"></span>
+            </div>
+
+            <div class="mb-2 d-flex align-item-center">
+                <label for="course" class="mt-1">Course :</label>
+                <select class="form-control w-50 mb-3 ms-2" th:field="*{course}">
+                    <option th:each="tempCourse:${course}"
+                            th:text="${tempCourse}" th:value="${tempCourse}"></option>
+                </select>
+                <span th:if="${#fields.hasErrors('course')}" th:error="*{course}" class="text-danger"></span>
+            </div>
+
+            <div class="mb-2 d-flex align-item-center">
+                <label for="location" class="mt-1">Location :</label>
+                <input class="form-control w-50 mb-3 ms-2" type="text" th:field="*{location}" placeholder="Enter Student Location">
+                <span th:if="${#fields.hasErrors('location')}" th:errors="*{location}" class="text-danger"></span>
+            </div>
+
             <button type="submit">Submit</button>
         </form>
     </div>
