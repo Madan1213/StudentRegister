@@ -17,7 +17,9 @@ $(document).ready(function(){
                         fetch('/delete/'+id,{
                             method:'get'
                         }).then(response=>response.json())
-                        .then(data=> console.log(data));
+                        .then(data =>{
+                        } );
+                        window.location.reload();
                     }
                 },
                 close:{
