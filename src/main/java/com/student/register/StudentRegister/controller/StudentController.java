@@ -39,7 +39,7 @@ public class StudentController
         webDataBinder.registerCustomEditor(String.class,editor);
     }
 
-    @GetMapping("/showForm")
+    @GetMapping("/")
     public String showForm(Model model)
     {
         model.addAttribute("student", new Student());

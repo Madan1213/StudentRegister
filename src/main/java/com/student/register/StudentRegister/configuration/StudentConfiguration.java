@@ -18,6 +18,22 @@ public class StudentConfiguration
         return  new JdbcUserDetailsManager(dataSource);
     }
 
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
+        httpSecurity.authorizeHttpRequests(configurer->
+                        configurer.
+                                anyRequest().authenticated()
+                ).
+                formLogin(form->
+                    form.loginPage("/loginPage")
+                            .loginProcessingUrl("/authenticateTheUser")
+                            .permitAll()
+                ).logout(logout->
+                        logout.
+                        deleteCookies("JSESSIONID").permitAll());
+        return httpSecurity.build();
+    }
+
     /*@Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity)throws Exception
     {

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity" lang="en">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Add Student</title>
@@ -10,6 +11,8 @@
 </head>
 <body>
     <div class="container border border-primary rounded m-5 p-4 w-50">
+        User Name : <span sec:authentication="name"></span><br>
+        Roles : <span sec:authentication="principal.authorities"></span>
         <h4 class="h-3 mb-4 text-primary border border-dark rounded-5 w-50 text-center">Student Registration Form</h4>
         <form th:action="@{/insertStudent}" class="form-group" th:object="${student}" method="post">
             <div class="mb-2 d-flex align-item-center">
